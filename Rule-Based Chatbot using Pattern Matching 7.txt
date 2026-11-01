@@ -1,0 +1,22 @@
+def chat():
+    print("ChatBot: Hello! Type 'bye' to end.")
+
+    while True:
+        msg = input("You: ").lower().strip()
+
+        if msg in ["hi", "hello", "hey"]:
+            reply = "Hello! How can I help you today?"
+        elif "my name is" in msg:
+            name = msg.replace("my name is", "").strip()
+            reply = f"Nice to meet you, {name}!"
+        elif msg in ["bye", "goodbye", "exit", "quit"]:
+            reply = "Goodbye! Have a great day."
+        else:
+            reply = "Interesting — tell me more."
+
+        print("ChatBot:", reply)
+
+        if msg in ["bye", "goodbye", "exit", "quit"]:
+            break
+
+chat()

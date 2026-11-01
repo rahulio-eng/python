@@ -1,0 +1,76 @@
+import math
+# Terminal node values (leaf nodes of the game tree)
+values = [3, 5, 6, 9, 1, 2, 0, -1]
+
+# Alpha-Beta Pruning function
+def alphabeta(depth, node_index, max_player, values, alpha, beta):
+
+    # If leaf node is reached
+    if depth == 3:
+        return values[node_index]
+
+    # MAX player's turn
+    if max_player:
+        best = -math.inf
+
+        for i in range(2):
+            val = alphabeta(
+                depth + 1,
+                node_index * 2 + i,
+                False,
+                values,
+                alpha,
+                beta
+            )
+
+            best = max(best, val)
+            alpha = max(alpha, best)
+
+            # Alpha-Beta pruning
+            if beta <= alpha:
+                print("Pruning at MAX node")
+                break
+        return best
+
+    # MIN player's turn
+    else:
+        best = math.inf
+
+        for i in range(2):
+            val = alphabeta(
+                depth + 1,
+                node_index * 2 + i,
+                True,
+                values,
+                alpha,
+                beta
+            )
+            best = min(best, val)
+            beta = min(beta, best)
+
+            # Alpha-Beta pruning
+            if beta <= alpha:
+                print("Pruning at MIN node")
+                break
+
+        return best
+
+# Driver code
+print("Leaf Node Values:", values)
+
+result = alphabeta(
+    depth=0,
+    node_index=0,
+    max_player=True,
+    values=values,
+    alpha=-math.inf,
+    beta=math.inf
+)
+
+print("\nOptimal Value:", result)
+
+print("\nLogic:")
+print("Alpha stores the best value found by MAX.")
+print("Beta stores the best value found by MIN.")
+print("When alpha >= beta, remaining branches are pruned.")
+print("This reduces the number of nodes evaluated.")
